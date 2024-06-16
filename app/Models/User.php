@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'category_id',
     ];
 
     /**
@@ -41,4 +42,35 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    
+    public function categories(){
+        return $this->belongsToMany(Category::class);
+    }
+    
+    public function todos(){
+        return $this->hasMany(User::class);
+        
+    }
+    
+    public function posts(){
+        return $this->hasMany(User::class,);
+        
+    }
+    
+    public function follower(){
+    return $this->belongsToMany(User::class, 'follows', 'followee_user_id','follower_user_id');
+    }
+    
+    // 自分 (繋ぎ先) をフォローしているユーザー = フォロワー (繋ぎ元) をリレーション
+    // フォロワー -> 自分
+    public function followee(){
+        return $this->belongsToMany(User::class, 'follows', 'follower_user_id','followee_user_id',);
+    }
+    
+    public function isFollowing($user_id)
+    {
+        return $this->follower()->where('follower_user_id',$user_id)->exists();
+    }
+    
+   
 }
