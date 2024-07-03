@@ -6,7 +6,8 @@
     </head>
     <body style="text-align: center">
         <h1>投稿画面</h1>
-        <form action="/posts" method="POST">
+        @if($target && $target->category_id == $category_id && $target->user_id == auth()->user()->id)
+        <form action="/posts/{{$category_id}}" method="POST">
             @csrf
             <div class="title">
                 <h2>Title</h2>
@@ -20,15 +21,33 @@
             </div>
             
             <div>
-                <label>カテゴリー</label>
-                    <select name="post[category_id]">
-                        @foreach($categories as $category)
-                            <option value="{{ $category->id }}">{{ $category->name }}</option>
-                        @endforeach
+                <label>{{$category_name}}</label>
+                    <select hidden name="post[category_id]">
+                        
+                        <option value="{{ $category_id }}">{{ $category_name }}</option>
+                        
+                    </select>
+            </div>
+            
+            <input type="submit" value="保存"/>
+        </form>
+        @else
+        <form action="/posts/{{$category_id}}/target" method="POST">
+            @csrf
+            <h2>Target</h2>
+            <input type="text" name="target[target]" placeholder="目標設定" value="{{ old('target.target') }}"/>
+            <p class="target__error" style="color:red">{{ $errors->first('target.target') }}</p>
+            <div>
+                <label>{{$category_name}}</label>
+                    <select hidden name="target[category_id]">
+                        
+                        <option value="{{ $category_id }}">{{ $category_name }}</option>
+                        
                     </select>
             </div>
             <input type="submit" value="保存"/>
         </form>
-        <div class="back">[<a href="/">back</a>]</div>
+        @endif
+        <div class="back">[<a href="/posts/{{$category_id}}">back</a>]</div>
     </body>
 </html>

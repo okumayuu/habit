@@ -39,9 +39,7 @@
                     @endforeach
                 </select>
             </div>
-            <button type="submit" >
-            追加する
-        </button>
+            <button type="submit" >追加する</button>
         </form>   
         <div>
             @foreach($todos as $todo)

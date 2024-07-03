@@ -7,7 +7,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\TodoController;
 use App\Http\Controllers\FollowController;
 use App\Http\Controllers\CategoryController;
-// use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\TargetController;
 
 /*
 |--------------------------------------------------------------------------
@@ -63,7 +63,16 @@ Route::controller(TodoController::class)->middleware(['auth'])->group(function()
 Route::controller(CategoryController::class)->middleware(['auth'])->group(function(){
  
     
-     Route::get('/posts/{category}',  [CategoryController::class, 'index']);//ここが動いている
+    Route::get('/posts/{category}',  [CategoryController::class, 'index']);
+    Route::post('/posts/{category}', [CategoryController::class, 'store']);
+    Route::get('/posts/{category}/create',  [CategoryController::class, 'create']);
+    
+    
+});
+
+Route::controller(TargetController::class)->middleware(['auth'])->group(function(){
+    
+    Route::post('/posts/{category}/target', [TargetController::class, 'store']);
     
 });
 

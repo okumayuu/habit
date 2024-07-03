@@ -11,7 +11,8 @@
     <body style="text-align: center" class="antialiased">
         <h1>Habit</h1>
         <h3>{{ $category_name }}</h3>
-        <a href='/posts/create'>create</a>
+        <h3>目標：{{$target_target}}</h3>
+        <a href='/posts/{{$category_id}}/create'>create</a>
         <div class='posts'>
             @foreach($posts as $post)
             <div class='post'>
@@ -63,7 +64,20 @@
         </script>
         
         <h3>Todo</h3>
-        
+        <form action="/todo" method="post" class="mt-10">
+          @csrf
+            <label>
+                <input placeholder="category's todo..." type="text" name="todo[todo]"/>
+            </label>
+            <div>
+                <select hidden name="todo[category_id]">
+                        
+                        <option value="{{ $category_id }}">{{ $category_name }}</option>
+                        
+                </select>
+            </div>
+            <button type="submit" >追加する</button>
+        </form>
         <div>
             
             @foreach($todos as $todo)
