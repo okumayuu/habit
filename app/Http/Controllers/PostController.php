@@ -33,7 +33,7 @@ class PostController extends Controller
         return view('posts.create')->with(['categories' => $category->get()]);
     }
 
-    public function store(Post $post, PostRequest $request)
+    public function store(Post $post, PostRequest $request,Category $category)
     {
         $input = $request['post'];
         $input['user_id']= auth()->user()->id;

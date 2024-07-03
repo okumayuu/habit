@@ -20,13 +20,13 @@ class TodoController extends Controller
         $input['user_id'] = $user_id;
         $todo->fill($input)->save();
         
-        return redirect('/');
+        return redirect()->back();
     }
     
     public function delete(Todo $todo)
     {
         $todo->delete();
         
-        return redirect('/');
+        return redirect()->back();
     }
 }

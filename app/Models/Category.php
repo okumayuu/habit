@@ -33,6 +33,10 @@ class Category extends Model
         
     }
     
+    public function target(){
+        return $this->hasOne(Target::class);
+    }
+    
     public function getByCategory(int $limit_count = 5){
          return $this->posts()->with('category')->orderBy('updated_at', 'DESC')->paginate($limit_count);
     }

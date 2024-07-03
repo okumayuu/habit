@@ -21,6 +21,7 @@ class Post extends Model
     'body',
     'category_id',
     'user_id',
+    'target_id',
     ];
     
     public function category(){
@@ -30,6 +31,11 @@ class Post extends Model
     public function user(){
         return $this->belongsTo(User::class);
     }
+    
+    public function target(){
+        return $this->belongsTo(Target::class);
+    }
+    
     
     
     
