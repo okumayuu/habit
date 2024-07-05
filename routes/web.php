@@ -8,6 +8,7 @@ use App\Http\Controllers\TodoController;
 use App\Http\Controllers\FollowController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\TargetController;
+use App\Http\Controllers\LikeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -75,6 +76,15 @@ Route::controller(TargetController::class)->middleware(['auth'])->group(function
     Route::post('/posts/{category}/target', [TargetController::class, 'store']);
     
 });
+
+Route::controller(LikeController::class)->middleware(['auth'])->group(function(){
+    
+    Route::post('/posts/{post}/like', [LikeController::class, 'likePost']);
+    Route::post('/posts/{post}/unlike', [LikeController::class, 'unlikePost']);
+    
+});
+
+
 
 Route::middleware('auth')->group(function () {
     Route::post('/follow/{user}', [FollowController::class,'follow']);
