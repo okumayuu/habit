@@ -36,8 +36,10 @@ class Post extends Model
         return $this->belongsTo(Target::class);
     }
     
-    
-    
+    public function likes()
+    {
+        return $this->hasMany(Like::class);
+    }
     
     public function getPaginateByLimit(int $limit_count = 5)
     {

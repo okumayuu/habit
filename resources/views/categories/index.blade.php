@@ -19,7 +19,18 @@
                 <a href="/posts/{{ $post->id }}"><h2 class='title'>{{ $post->title }}</h2></a>
                 <p class=='body'>{{ $post->body }}</p>
                 <small class=='user'>{{ $post->user->name }}</small>
-                
+                <p>いいね数: {{ $post->likes->count() }}</p>
+                @if ($post->likes->where('user_id', $loginUser->id)->count())
+                <form action="/posts/{{$post->id}}/unlike" id="form_{{ $post->id }}" method="POST">
+                    @csrf
+                    <button type="submit">いいねを取り消す</button>
+                </form>
+                @else
+                <form action="/posts/{{$post->id}}/like" id="form_{{ $post->id }}" method="POST">
+                    @csrf
+                    <button type="submit">いいね</button>
+                </form>
+                @endif
                 @if($loginUser->id==$post->user_id)
                     <form action="/posts/{{ $post->id }}" id="form_{{ $post->id }}" method="post">
                         @csrf
