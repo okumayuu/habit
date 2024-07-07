@@ -19,6 +19,29 @@
                 <a href="/posts/{{ $post->id }}"><h2 class='title'>{{ $post->title }}</h2></a>
                 <p class=='body'>{{ $post->body }}</p>
                 <small class=='user'>{{ $post->user->name }}</small>
+                <h3>コメント</h3>
+                @foreach ($post->comments as $comment)
+                    <div>
+                        <p>
+                            {{ $comment->comment }}
+                            {{ $comment->user->name }}
+                        </p>
+                        @if(auth()->id() == $comment->user_id)
+                            <form action="/comments/{{$comment->id}}" id="form_{{ $comment->id }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" onclick="deleteMessage({{ $comment->id }})">削除</button>
+                            </form>
+                        @endif
+                    </div>
+                @endforeach
+                
+                <form action="/posts/{{$post->id}}/comments" id="form_{{ $post->id }}" method="POST">
+                    @csrf
+                    <textarea name="comment" placeholder="コメントを入力"></textarea>
+                    <button type="submit">コメントする</button>
+                </form>
+                
                 <p>いいね数: {{ $post->likes->count() }}</p>
                 @if ($post->likes->where('user_id', $loginUser->id)->count())
                 <form action="/posts/{{$post->id}}/unlike" id="form_{{ $post->id }}" method="POST">
@@ -32,10 +55,10 @@
                 </form>
                 @endif
                 @if($loginUser->id==$post->user_id)
-                    <form action="/posts/{{ $post->id }}" id="form_{{ $post->id }}" method="post">
+                    <form action="/posts/{{ $post->id }}" id="form_{{ $post->id }}" method="POST">
                         @csrf
                         @method('DELETE')
-                        <button type="button" onclick="deletePost({{ $post->id }})">delete</button> 
+                        <button type="submit" onclick="deleteMessage({{ $post->id }})">delete</button> 
                     </form>
                 @else
                 @endif
@@ -65,7 +88,7 @@
             {{ $posts->links() }}
         </div>
         <script>
-            function deletePost(id) {
+            function deleteMessage(id) {
                 'use strict'
         
                 if (confirm('削除すると復元できません。本当に削除しますか？')) {

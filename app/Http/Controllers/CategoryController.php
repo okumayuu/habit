@@ -48,7 +48,6 @@ class CategoryController extends Controller
     {
         $input = $request['post'];
         $input['user_id']= auth()->user()->id;
-        $input += ['user_id' => $request->user()->id];
         $post->fill($input)->save();
         return redirect('/posts/' .$input['category_id']);
     }
