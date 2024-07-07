@@ -9,6 +9,8 @@ use App\Http\Controllers\FollowController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\TargetController;
 use App\Http\Controllers\LikeController;
+use App\Http\Controllers\CommentController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -83,6 +85,16 @@ Route::controller(LikeController::class)->middleware(['auth'])->group(function()
     Route::post('/posts/{post}/unlike', [LikeController::class, 'unlikePost']);
     
 });
+
+Route::controller(CommentController::class)->middleware(['auth'])->group(function(){
+    
+    Route::post('/posts/{post}/comments', [CommentController::class, 'store']);
+    Route::delete('/comments/{comment}', [CommentController::class, 'delete']);
+
+
+
+});
+
 
 
 
