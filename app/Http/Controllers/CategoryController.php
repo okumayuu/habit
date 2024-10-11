@@ -11,20 +11,24 @@ use App\Models\Target;
 
 class CategoryController extends Controller
 {
-    public function index(Category $category,Todo $todo,Target $target)
+    public function index(Category $category, Todo $todo)
     {
         $user = \Auth::user();
         $todo_user = Todo::where('user_id', $user->id)->get();
         $category_id = $category->id;
+    
+        // Targetを取得し、存在しない場合にはnullを返す
         $target = Target::where('category_id', $category_id)->where('user_id', $user->id)->first();
+        $target_value = $target ? $target->target : null;
+    
         return view('categories.index')->with([
             'posts' => $category->getByCategory(),
-            'loginUser'=>$user,
-            'todos'=>$todo->get(),
-            'category_name'=>$category->name,
-            'category_id'=>$category->id,
-            'target_target'=>$target->target,
-            ]);
+            'loginUser' => $user,
+            'todos' => $todo_user,
+            'category_name' => $category->name,
+            'category_id' => $category->id,
+            'target_target' => $target_value,
+        ]);
     }
     
     public function create(Category $category,Todo $todo,Target $target)

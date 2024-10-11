@@ -15,11 +15,6 @@ class PostController extends Controller
         return view('posts.index')->with(['posts' => $post->getPaginateByLimit(),'loginUser'=>$loginuser]);
     }
     
-    public function category1(Category $category)
-    {
-        $loginuser=\Auth::user();
-        return view('posts.category1')->with(['posts' => $category->getPaginateByLimit(),'loginUser'=>$loginuser]);//Categoryモデルをインスタンス化してcategory_idごとに投稿を取得する処理を変数postsに入れる
-    }
 
     public function show(Post $post)
     {

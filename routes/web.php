@@ -39,7 +39,7 @@ Route::middleware('auth')->group(function () {
 
 
 Route::middleware('auth')->group(function () {
-    Route::get('/', [HomeController::class, 'home']);
+    Route::get('/', [HomeController::class, 'home'])->name('home');
 
 });
 
@@ -66,7 +66,7 @@ Route::controller(TodoController::class)->middleware(['auth'])->group(function()
 Route::controller(CategoryController::class)->middleware(['auth'])->group(function(){
  
     
-    Route::get('/posts/{category}',  [CategoryController::class, 'index']);
+    Route::get('/posts/{category}',  [CategoryController::class, 'index'])->name('posts.index');
     Route::post('/posts/{category}', [CategoryController::class, 'store']);
     Route::get('/posts/{category}/create',  [CategoryController::class, 'create']);
     
@@ -75,7 +75,8 @@ Route::controller(CategoryController::class)->middleware(['auth'])->group(functi
 
 Route::controller(TargetController::class)->middleware(['auth'])->group(function(){
     
-    Route::post('/posts/{category}/target', [TargetController::class, 'store']);
+    Route::get('/posts/{category}/target/edit', [TargetController::class, 'edit'])->name('target.edit');
+    Route::put('/target/{category}/update', [TargetController::class, 'update'])->name('target.update');
     
 });
 
