@@ -51,26 +51,34 @@
                         @endforeach
                     </div>
                 </div>
-                <!--投稿作成画面-->
+                <!--目標編集画面-->
                 <div class="w-1/2 p-4">
                     <div class="bg-white p-6 rounded shadow-lg">
                         <h2 class="text-xl font-semibold mb-4">{{ $category_name }}</h2>
                     </div>
                     
                     <div class="max-w-4xl mx-auto p-4">
-                        <form action="/posts/{{$category_id}}/target" method="POST">
+                        <form action="/target/{{ $category_id }}/update" method="POST">
                             @csrf
-                            <h2>目標編集画面</h2>
-                            <input type="text" name="target[target]" value="{{ old('target.target') }}"/>
-                            <div>
-                                <label>{{$category_name}}</label>
-                                    <select hidden name="target[category_id]">
-                                        
-                                        <option value="{{ $category_id }}">{{ $category_name }}</option>
-                                        
-                                    </select>
+                            @method('PUT')
+        
+                            <div class="mb-4">
+                                <label for="target" class="block text-gray-700">目標:</label>
+                                <input type="text" name="target[target]" id="target" class="w-full p-2 border rounded" value="{{ old('target', $target->target) }}" required>
+                                
+                                @if ($errors->has('target.target'))
+                                    <div class="text-red-500 mt-2">
+                                        {{ $errors->first('target.target') }}
+                                    </div>
+                                @endif
                             </div>
-                            <input type="submit" value="保存"/>
+        
+                            <!-- 隠しフィールドでcategory_idを送信 -->
+                            <input type="hidden" name="target[category_id]" value="{{ $category_id }}">
+        
+                            <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
+                                目標を更新する
+                            </button>
                         </form>
                         <div class="back">[<a href="/posts/{{$category_id}}">back</a>]</div>
                     </div>
