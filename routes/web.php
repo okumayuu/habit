@@ -39,7 +39,7 @@ Route::middleware('auth')->group(function () {
 
 
 Route::middleware('auth')->group(function () {
-    Route::get('/', [HomeController::class, 'home'])->name('home');
+    Route::get('/home', [HomeController::class, 'home'])->name('home');
 
 });
 

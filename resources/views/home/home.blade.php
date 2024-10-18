@@ -9,12 +9,21 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="flex justify-center">
                 <!-- Todo List -->
-                <div class="w-1/6 p-4">
+                <div class="w-1/4 p-4">
                     <h3 class="text-lg font-semibold mb-3">Todo</h3>
                     <form action="/todo" method="post" class="space-y-4">
                         @csrf
-                        <div>
+                        <div class="flex justify-between items-center p-2 bg-white rounded shadow">
                             <input placeholder="todo..." type="text" name="todo[todo]" class="w-full p-2 border rounded" required/>
+                            <button type="submit" class=" text-white py-2 px-4 rounded-full hover:bg-green-200">
+                                <svg  class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="#4CAF50"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-pencil-plus">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                    <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+                                    <path d="M13.5 6.5l4 4" />
+                                    <path d="M16 19h6" />
+                                    <path d="M19 16v6" />
+                                </svg>
+                            </button>
                         </div>
                         <div>
                             <select name="todo[category_id]" class="w-full p-2 border rounded">
@@ -23,7 +32,6 @@
                                 @endforeach
                             </select>
                         </div>
-                        <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">追加する</button>
                     </form>
 
                     <div class="mt-6 space-y-3">
@@ -31,7 +39,9 @@
                             <div class="flex justify-between items-center p-2 bg-white rounded shadow">
                                 <div>
                                     <p class="text-sm font-medium">{{ $todo->todo }}</p>
-                                    <small class="text-gray-500">{{ $todo->category->name }}</small>
+                                    <div class="flex items-center">
+                                        <small class="text-gray-500 mr-4">{{ $todo->category->name }}</small>
+                                    </div>
                                 </div>
                                 <form action="/delete/{{ $todo->id }}" method="post" enctype="multipart/form-data">
                                     @csrf
@@ -51,7 +61,7 @@
                 <!-- Main Content -->
                 <div class="w-1/2 p-4">
                     <div class="bg-white p-6 rounded shadow-lg">
-                        <h2 class="text-xl font-semibold mb-4">今日も１日頑張りましょう！</h2>
+                        <h2 class="text-xl font-semibold mb-4">ようこそ{{$user->name}}さん</h2>
                     </div>
                 </div>
 
