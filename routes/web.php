@@ -75,6 +75,7 @@ Route::controller(CategoryController::class)->middleware(['auth'])->group(functi
 
 Route::controller(TargetController::class)->middleware(['auth'])->group(function(){
     
+    Route::post('/posts/{category}/target', [TargetController::class, 'store']);
     Route::get('/posts/{category}/target/edit', [TargetController::class, 'edit'])->name('target.edit');
     Route::put('/target/{category}/update', [TargetController::class, 'update'])->name('target.update');
     
