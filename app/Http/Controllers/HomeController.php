@@ -17,7 +17,12 @@ class HomeController extends Controller
      
         
         
-        return view('home.home')->with(['user' => $user,'categories' => $category,'todos' => $todo]);
+        return view('home.home')->with([
+            'user' => $user,
+            'usersposts' => $user->posts(),
+            'categories' => $category,
+            'todos' => $todo
+            ]);
     }
     
     
